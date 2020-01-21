@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/White"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="200dp"
+            android:src="@drawable/amazon_logo"
+            android:scaleType="fitXY"
+            android:layout_height="100dp">
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Referral"
+            android:textSize="25dp"
+            android:textColor="@color/Black"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/opensanssemibold"
+            android:layout_height="80dp">
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:layout_marginRight="30dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:hint="Mobile No"
+            android:maxLength="10"
+            android:paddingLeft="15dp"
+            android:fontFamily="@font/opensansregular"
+            android:inputType="number"
+            android:id="@+id/mobile_no"
+            android:imeOptions="actionNext"
+            android:textColorHint="@color/Black"
+            android:background="@drawable/themewhite_rounded_rectangle"
+            android:layout_height="50dp">
+        </EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:hint="Password / Pin"
+            android:fontFamily="@font/opensansregular"
+            android:paddingLeft="15dp"
+            android:id="@+id/password"
+            android:inputType="numberPassword"
+            android:imeOptions="actionDone"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/Black"
+            android:background="@drawable/themewhite_rounded_rectangle"
+            android:layout_height="50dp">
+        </EditText>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/errror"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/Red"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Forget Password"
+            android:id="@+id/forget_password"
+            android:fontFamily="@font/opensansregular"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Black"
+            android:layout_height="wrap_content">
+        </TextView>
+        <Button
+            android:layout_width="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/White"
+            android:text="Login"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/btnLogin"
+            android:background="@drawable/themeblack_rounded_rectangle"
+            android:layout_height="wrap_content">
+
+        </Button>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="New here? Sign up"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/opensansregular"
+        android:textColor="@color/Black"
+        android:id="@+id/sign_up"
+        android:layout_height="wrap_content">
+    </TextView>
+    <com.iapps.libs.views.LoadingCompound
+        android:id="@+id/ld"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:visibility="gone" />
+
+</FrameLayout>
