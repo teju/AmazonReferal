@@ -1,6 +1,5 @@
-package com.amazon.referral.ui
+package com.amazon.referral.ui.activity
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,21 +7,14 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.franmontiel.localechanger.LocaleChanger
-import com.iapps.gon.etc.callback.NotifyListener
 import com.iapps.libs.helpers.BaseHelper
 import com.iapps.libs.helpers.BaseUIHelper
-import com.mapbox.mapboxsdk.Mapbox
-
-import com.memu.ui.dialog.NotifyDialogFragment
 
 import io.paperdb.Paper
 import java.util.ArrayList
 import android.content.Intent
 import android.content.IntentFilter
-import com.google.gson.GsonBuilder
 import android.os.Handler
 import android.view.View
 import com.amazon.referral.R
@@ -31,7 +23,7 @@ import com.amazon.referral.libs.UserInfoManager
 import com.amazon.referral.ui.fragments.BaseFragment
 import com.amazon.referral.ui.fragments.LoginFragment
 import com.amazon.referral.ui.fragments.MainFragment
-import com.esotericsoftware.minlog.Log
+import com.amazon.referral.ui.fragments.VideoFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -128,9 +120,9 @@ class ActivityMain : AppCompatActivity(){
     fun triggerMainProcess(){
 
         if(!BaseHelper.isEmpty(UserInfoManager.getInstance(this).authToken))
-            setFragment(LoginFragment())
+            setFragment(VideoFragment())
         else
-            setFragment(MainFragment())
+            setFragment(LoginFragment())
     }
 
 

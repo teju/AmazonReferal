@@ -5,7 +5,11 @@ import com.amazon.referral.libs.APIs
 import com.amazon.referral.libs.Helper
 import com.amazon.referral.libs.Keys
 import com.amazon.referral.libs.SingleLiveEvent
+import com.amazon.referral.model.forgetPassword.ForgetPassword
 import com.amazon.referral.model.general.GeneralResponse
+import com.amazon.referral.model.login.Login
+import com.amazon.referral.model.uploadProfilePic.UploadProfilePic
+import com.amazon.referral.ui.fragments.ForgetPasswordFragment
 import com.google.gson.GsonBuilder
 
 import com.iapps.libs.helpers.BaseConstants
@@ -13,7 +17,7 @@ import com.iapps.libs.objects.Response
 import org.json.JSONObject
 
 
-class PostRegisterViewModel(application: Application) : BaseViewModel(application) {
+class PostResetPasswordViewModel(application: Application) : BaseViewModel(application) {
 
     private val trigger = SingleLiveEvent<Integer>()
 
@@ -32,7 +36,7 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
         this.apl = application
     }
 
-    fun loadData(apisignupform: JSONObject, register: Boolean) {
+    fun loadData(ResetPasswordForm : JSONObject) {
         genericHttpAsyncTask = Helper.GenericHttpAsyncTask(object : Helper.GenericHttpAsyncTask.TaskListener {
 
             override fun onPreExecute() {
@@ -68,14 +72,9 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
         })
 
         genericHttpAsyncTask.method = BaseConstants.POST
-        if(register) {
-            genericHttpAsyncTask.setUrl(APIs.postRegister)
-        } else {
-            genericHttpAsyncTask.setUrl(APIs.postReferralRegister)
-
-        }
+        genericHttpAsyncTask.setUrl(APIs.postResetPasswordReset)
         genericHttpAsyncTask.context = apl.applicationContext
-        genericHttpAsyncTask.setPostParams(Keys.APISIGNUPFORM,apisignupform)
+        genericHttpAsyncTask.setPostParams(Keys.RESETPASSWORDFORM,ResetPasswordForm)
         genericHttpAsyncTask.setCache(false)
         genericHttpAsyncTask.execute()
 

@@ -5,7 +5,10 @@ import com.amazon.referral.libs.APIs
 import com.amazon.referral.libs.Helper
 import com.amazon.referral.libs.Keys
 import com.amazon.referral.libs.SingleLiveEvent
-import com.amazon.referral.model.general.GeneralResponse
+import com.amazon.referral.model.forgetPassword.ForgetPassword
+import com.amazon.referral.model.login.Login
+import com.amazon.referral.model.uploadProfilePic.UploadProfilePic
+import com.amazon.referral.ui.fragments.ForgetPasswordFragment
 import com.google.gson.GsonBuilder
 
 import com.iapps.libs.helpers.BaseConstants
@@ -13,7 +16,7 @@ import com.iapps.libs.objects.Response
 import org.json.JSONObject
 
 
-class PostRegisterViewModel(application: Application) : BaseViewModel(application) {
+class PostForgetPasswordViewModel(application: Application) : BaseViewModel(application) {
 
     private val trigger = SingleLiveEvent<Integer>()
 
@@ -21,7 +24,7 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
 
     var apl: Application
 
-    var obj: GeneralResponse? = null
+    var obj: ForgetPassword? = null
 
 
     fun getTrigger(): SingleLiveEvent<Integer> {
@@ -32,7 +35,7 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
         this.apl = application
     }
 
-    fun loadData(apisignupform: JSONObject, register: Boolean) {
+    fun loadData(PasswordResetRequestForm : JSONObject) {
         genericHttpAsyncTask = Helper.GenericHttpAsyncTask(object : Helper.GenericHttpAsyncTask.TaskListener {
 
             override fun onPreExecute() {
@@ -52,7 +55,7 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
                 if (json != null) {
                     try {
                         val gson = GsonBuilder().create()
-                        obj = gson.fromJson(response!!.content.toString(), GeneralResponse::class.java)
+                        obj = gson.fromJson(response!!.content.toString(), ForgetPassword::class.java)
                         if (obj!!.status.equals(Keys.STATUS_CODE)) {
                             trigger.postValue(NEXT_STEP)
                         }else{
@@ -68,14 +71,9 @@ class PostRegisterViewModel(application: Application) : BaseViewModel(applicatio
         })
 
         genericHttpAsyncTask.method = BaseConstants.POST
-        if(register) {
-            genericHttpAsyncTask.setUrl(APIs.postRegister)
-        } else {
-            genericHttpAsyncTask.setUrl(APIs.postReferralRegister)
-
-        }
+        genericHttpAsyncTask.setUrl(APIs.postRequestPasswordReset)
         genericHttpAsyncTask.context = apl.applicationContext
-        genericHttpAsyncTask.setPostParams(Keys.APISIGNUPFORM,apisignupform)
+        genericHttpAsyncTask.setPostParams(Keys.PASSWORDRESETREQUESTFORM,PasswordResetRequestForm)
         genericHttpAsyncTask.setCache(false)
         genericHttpAsyncTask.execute()
 

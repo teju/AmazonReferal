@@ -19,5 +19,5 @@
         <item>Marathi</item>
 
     </string-array>
-
+    <string name="description">Media Controls</string>
 </resources>

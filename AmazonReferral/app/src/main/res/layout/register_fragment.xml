@@ -191,6 +191,32 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rlLang"
+                    android:visibility="gone"
+                    android:background="@drawable/themewhite_rounded_rectangle"
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:id="@+id/lang_spinner"
+                        android:layout_width="match_parent"
+                        android:background="@color/transparent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:entries="@array/language" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/menu_down"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content">
+
+                    </ImageView>
+
+                </RelativeLayout>
 
                 <Button
                     android:layout_width="200dp"

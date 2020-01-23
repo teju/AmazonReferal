@@ -64,13 +64,14 @@ class PostUploadProfilePicViewModel(application: Application) : BaseViewModel(ap
 
             }
         })
-
         genericHttpAsyncTask.method = BaseConstants.POST
         genericHttpAsyncTask.setUrl(APIs.postUploadProfilePic)
         genericHttpAsyncTask.context = apl.applicationContext
         genericHttpAsyncTask.setFileParams(Keys.PROFILE,path,"multipart/form-data; boundar")
         genericHttpAsyncTask.setCache(false)
+        Helper.applyHeader(apl,genericHttpAsyncTask)
         genericHttpAsyncTask.execute()
+        System.out.println("genericHttpAsyncTask "+genericHttpAsyncTask.url)
 
     }
 

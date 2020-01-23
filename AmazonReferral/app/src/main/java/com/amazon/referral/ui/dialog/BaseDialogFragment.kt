@@ -11,7 +11,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.fragment.app.DialogFragment
 import com.amazon.referral.R
 import com.amazon.referral.libs.UserInfoManager
-import com.amazon.referral.ui.ActivityMain
+import com.amazon.referral.ui.activity.ActivityMain
 import com.bumptech.glide.BuildConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

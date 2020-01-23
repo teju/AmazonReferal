@@ -20,10 +20,7 @@ import com.amazon.referral.webservice.PostGetVideosViewModel
 import com.amazon.referral.webservice.PostLanguagesViewModel
 import com.mapbox.mapboxsdk.style.expressions.Expression.stop
 
-
-
-
-class VideoFragment : BaseFragment() , View.OnClickListener,
+class VideoViewFragment : BaseFragment() , View.OnClickListener,
         SurfaceHolder.Callback, MediaPlayer.OnPreparedListener,
         VideoControllerView.MediaPlayerControl,View.OnTouchListener  {
 
@@ -83,7 +80,7 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
 
     fun setGetVideosAPIObserver() {
         postGetVideosViewModel = ViewModelProviders.of(this).get(PostGetVideosViewModel::class.java).apply {
-            this@VideoFragment.let { thisFragReference ->
+            this@VideoViewFragment.let { thisFragReference ->
                 isLoading.observe(thisFragReference, Observer { aBoolean ->
                     if(aBoolean!!) {
                         ld.showLoadingV2()
@@ -108,7 +105,7 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
     }
     fun setGetLanguagesAPIObserver() {
         postLanguagesViewModel = ViewModelProviders.of(this).get(PostLanguagesViewModel::class.java).apply {
-            this@VideoFragment.let { thisFragReference ->
+            this@VideoViewFragment.let { thisFragReference ->
                 isLoading.observe(thisFragReference, Observer { aBoolean ->
                     if(aBoolean!!) {
                         ld.showLoadingV2()

@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.amazon.referral.R
+import com.amazon.referral.libs.UserInfoManager
 import com.amazon.referral.webservice.PostDashBoardViewModel
 import com.amazon.referral.webservice.PostRegisterOtpViewModel
 import com.amazon.referral.webservice.PostUploadProfilePicViewModel
 
 import com.facebook.*
 import com.iapps.gon.etc.callback.NotifyListener
+import com.memu.ui.dialog.NotifyDialogFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 
 
@@ -34,11 +36,20 @@ class MainFragment : BaseFragment() , View.OnClickListener {
         initUI();
     }
 
+    override fun onBackTriggered() {
+        home().exitApp()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        postDashBoardViewModel.loadData()
+    }
+
     private fun initUI() {
         setDashBoardAPIObserver()
         btnReferral.setOnClickListener(this)
-        postDashBoardViewModel.loadData()
-
+        logout.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -47,6 +58,20 @@ class MainFragment : BaseFragment() , View.OnClickListener {
                 home().setFragment(RegisterFragment().apply {
                     isRegister = false
                 })
+            }
+            R.id.logout -> {
+                showNotifyDialog(
+                        "", "Are you sure you want to Logout?",
+                        getString(R.string.ok),"Cancel",object : NotifyListener {
+                    override fun onButtonClicked(which: Int) {
+                        if(which == NotifyDialogFragment.BUTTON_POSITIVE) {
+                            UserInfoManager.getInstance(activity!!).logout()
+                            home().setFragment(LoginFragment())
+                        }
+                    }
+                }
+                )
+
             }
         }
     }

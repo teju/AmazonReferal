@@ -41,11 +41,15 @@ class LoginFragment : BaseFragment() , View.OnClickListener {
         initUI();
     }
 
+    override fun onBackTriggered() {
+        home().exitApp()
+    }
     private fun initUI() {
         setLoginAPIObserver()
 
         btnLogin.setOnClickListener(this)
         sign_up.setOnClickListener(this)
+        forget_password.setOnClickListener(this)
     }
 
 
@@ -61,6 +65,9 @@ class LoginFragment : BaseFragment() , View.OnClickListener {
             }
             R.id.sign_up -> {
                 home().setFragment(RegisterFragment())
+            }
+            R.id.forget_password -> {
+                home().setFragment(ForgetPasswordFragment())
             }
         }
     }

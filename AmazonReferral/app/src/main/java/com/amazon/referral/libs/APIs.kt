@@ -25,6 +25,18 @@ class APIs : BaseKeys() {
         val postProfileDashboard: String
             get() = BASE_URL!!  +  "profile/dashboard"
 
+        val postRequestPasswordReset: String
+            get() = BASE_URL!!  +  "user/request-password-reset"
+
+        val postResetPasswordReset: String
+            get() = BASE_URL!!  +  "user/reset-password"
+
+        val postLanguages: String
+            get() = BASE_URL!!  +  "profile/languages"
+
+        val postGetVideos: String
+            get() = BASE_URL!!  +  "profile/get-videos"
+
 
     }
 }

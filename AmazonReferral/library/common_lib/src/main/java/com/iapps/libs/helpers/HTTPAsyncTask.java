@@ -42,7 +42,7 @@ import java.util.*;
  * Abstract class to handle HTTP connection to a web server
  */
 public abstract class HTTPAsyncTask
-	extends AsyncTask<String, Void, Response> {
+		extends AsyncTask<String, Void, Response> {
 
 	private boolean httpsEnabled = false;
 	private boolean isMultipart = false;
@@ -114,7 +114,7 @@ public abstract class HTTPAsyncTask
 
 	/**
 	 * Get the URL
-	 * 
+	 *
 	 * @return the URL being used for the end point
 	 */
 	public URL getUrl() {
@@ -123,7 +123,7 @@ public abstract class HTTPAsyncTask
 
 	/**
 	 * Set the URL to be used to connect to the end point
-	 * 
+	 *
 	 * @param url , the url to be used
 	 */
 	public void setUrl(String url) {
@@ -179,7 +179,7 @@ public abstract class HTTPAsyncTask
 
 	/**
 	 * Set the header key value pair
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 */
@@ -330,24 +330,24 @@ public abstract class HTTPAsyncTask
 	 */
 	private static void disableSSLCertificateChecking() {
 		TrustManager[] trustAllCerts = new TrustManager[] {
-			new X509TrustManager() {
+				new X509TrustManager() {
 
-				public X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
+					public X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
 
-				@Override
-				public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-						throws CertificateException {
-					// Not implemented
-				}
+					@Override
+					public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+							throws CertificateException {
+						// Not implemented
+					}
 
-				@Override
-				public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-						throws CertificateException {
-					// Not implemented
+					@Override
+					public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+							throws CertificateException {
+						// Not implemented
+					}
 				}
-			}
 		};
 
 		try {
@@ -479,7 +479,7 @@ public abstract class HTTPAsyncTask
 //					conn = (HttpsURLConnection) url.openConnection();
 //				}
 
-                if (url != null) {
+				if (url != null) {
 
 					if(Build.VERSION.SDK_INT < 21) {
 						try {
@@ -513,7 +513,7 @@ public abstract class HTTPAsyncTask
 
 					}
 
-                }
+				}
 
 			}else{
 				if (url != null) {
@@ -750,8 +750,8 @@ public abstract class HTTPAsyncTask
 							outputStream.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
 							outputStream.writeBytes(lineEnd);
 
-							// Log.d("value", map.get(Keys.KEY)
-							// +":"+map.get(Keys.NAME)+":"+map.get(Keys.FILEPATH));
+							 Log.d("value", map.get(BaseKeys.KEY)
+							 +":"+map.get(BaseKeys.NAME)+" FILEPATH: "+map.get(BaseKeys.FILEPATH));
 							File file = new File(map.get(BaseKeys.FILEPATH));
 							FileInputStream fileInputStream = new FileInputStream(file);
 							bytesAvailable = fileInputStream.available();
@@ -781,7 +781,7 @@ public abstract class HTTPAsyncTask
 							outputStream.writeBytes(lineEnd);
 
 							outputStream.write(bytesParams.get(key));
-							Log.d("value", key + ":" + params.get(key));
+							Log.d("value", key + " params :" + params.get(key));
 							outputStream.writeBytes(lineEnd);
 
 						}
@@ -841,7 +841,7 @@ public abstract class HTTPAsyncTask
 //					printResponse(responseString, String.valueOf(http_status));
 //				else{
 //
-					Log.v("Log ",  this.getUrl().toString()+"\nhttp status : " + http_status + "\nheader : " + mHeaderParams.toString() + "\nparams : " + params.toString() + "\n" +responseString);
+				Log.v("Log ",  this.getUrl().toString()+"\nhttp status : " + http_status + "\nheader : " + mHeaderParams.toString() + "\nparams : " + params.toString() + "\n" +responseString);
 				logThisApi(responseString,String.valueOf(http_status),mHeaderParams.toString());
 
 //				}
@@ -866,7 +866,7 @@ public abstract class HTTPAsyncTask
 			if (BaseConstants.IS_FOR_UNIT_TESTING){
 				printResponse(responseString, String.valueOf(http_status));
 				e.printStackTrace();
-		     }
+			}
 
 			response = new Response(BaseConstants.STATUS_TIMEOUT, "");
 
@@ -967,103 +967,103 @@ public abstract class HTTPAsyncTask
 		String exception = "No Exception";
 
 		try {
-				System.out.println("logThisApi "+content);
+			System.out.println("logThisApi "+content);
 
 
-				BeanLogAPI beanApi = new BeanLogAPI();
+			BeanLogAPI beanApi = new BeanLogAPI();
 
-				String Title = "";
+			String Title = "";
+
+			try {
+				if(!BaseHelper.isEmpty(this.url.toString()))
+					beanApi.setUrl(this.url.toString());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
+
+			try {
+				if(!BaseHelper.isEmpty(this.getClass().toString()))
+					beanApi.setShortenClassName(this.getClass());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
+			Title = "API ";
+
+
+			try {
+				String cacheDesc = "";
+
 
 				try {
-					if(!BaseHelper.isEmpty(this.url.toString()))
-						beanApi.setUrl(this.url.toString());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
+					if(headers != null) {
+						beanApi.setHeader(headers.toString());
+						cacheDesc = "";
+						cacheDesc += "Loaded From: API\n";
+						Title = "API";
+					}else{
+						cacheDesc = "";
+						cacheDesc += "Loaded From: Cache\n";
+						Title = "Cache";
 
-				try {
-					if(!BaseHelper.isEmpty(this.getClass().toString()))
-						beanApi.setShortenClassName(this.getClass());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
-				Title = "API ";
-
-
-				try {
-					String cacheDesc = "";
-
-
-					try {
-						if(headers != null) {
-							beanApi.setHeader(headers.toString());
-							cacheDesc = "";
-							cacheDesc += "Loaded From: API\n";
-							Title = "API";
-						}else{
-							cacheDesc = "";
-							cacheDesc += "Loaded From: Cache\n";
-							Title = "Cache";
-
-						}
-					} catch (Exception e) {
-						exception = e.toString() ;
 					}
-
-					if(!BaseHelper.isEmpty(this.getMethod()))
-						beanApi.setMethod(this.getMethod() + "\n" + cacheDesc);
 				} catch (Exception e) {
 					exception = e.toString() ;
 				}
 
+				if(!BaseHelper.isEmpty(this.getMethod()))
+					beanApi.setMethod(this.getMethod() + "\n" + cacheDesc);
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
 
-				try {
-					if(content!=null)
-						beanApi.setContent(content);
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
 
-				try {
-					if(!BaseHelper.isEmpty(getParams().toString()))
-						beanApi.setParams(getParams().toString());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
+			try {
+				if(content!=null)
+					beanApi.setContent(content);
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
 
-				try {
-					if(!BaseHelper.isEmpty(statuscode))
-						beanApi.setStatuscode(statuscode);
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
+			try {
+				if(!BaseHelper.isEmpty(getParams().toString()))
+					beanApi.setParams(getParams().toString());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
 
-				try {
-					if(!BaseHelper.isEmpty(getFileParams().toString()))
-						beanApi.setFileparam(getFileParams().toString());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
+			try {
+				if(!BaseHelper.isEmpty(statuscode))
+					beanApi.setStatuscode(statuscode);
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
 
-				try {
-					if(!BaseHelper.isEmpty(getBytesParams().toString()))
-						beanApi.setByteparam(getBytesParams().toString());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
+			try {
+				if(!BaseHelper.isEmpty(getFileParams().toString()))
+					beanApi.setFileparam(getFileParams().toString());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
 
-				try {
-					beanApi.setmHeaderParams(Helper.headerList);
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
-				try {
-					beanApi.setParameters(this.getParams().toString());
-				} catch (Exception e) {
-					exception = e.toString() ;
-				}
-				beanApi.setException(exception);
-				Helper.logThisAPI(getContext(), beanApi, Title);
+			try {
+				if(!BaseHelper.isEmpty(getBytesParams().toString()))
+					beanApi.setByteparam(getBytesParams().toString());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
+
+			try {
+				beanApi.setmHeaderParams(Helper.headerList);
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
+			try {
+				beanApi.setParameters(this.getParams().toString());
+			} catch (Exception e) {
+				exception = e.toString() ;
+			}
+			beanApi.setException(exception);
+			Helper.logThisAPI(getContext(), beanApi, Title);
 
 		} catch (Exception e) {
 			System.out.println("logThisApi Exception "+e.toString());

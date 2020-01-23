@@ -8,26 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.amazon.referral.R
 
-import com.facebook.login.LoginResult
-import com.facebook.Profile.getCurrentProfile
-import com.facebook.internal.ImageRequest.getProfilePictureUri
-import com.squareup.picasso.Picasso
-import android.util.Log
 import android.widget.AdapterView
-import com.facebook.*
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.amazon.referral.libs.Helper
 import com.amazon.referral.libs.Keys
-import com.amazon.referral.libs.UserInfoManager
-import com.amazon.referral.webservice.PostLoginViewModel
 import com.amazon.referral.webservice.PostRegisterOtpViewModel
 import com.amazon.referral.webservice.PostRegisterViewModel
 import com.amazon.referral.webservice.PostUploadProfilePicViewModel
 import com.iapps.gon.etc.callback.NotifyListener
 import com.iapps.libs.helpers.BaseHelper
-import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete
 import kotlinx.android.synthetic.main.register_fragment.*
 import kotlinx.android.synthetic.main.register_fragment.mobile_no
 import kotlinx.android.synthetic.main.register_fragment.password
@@ -48,6 +38,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
     var file_name = ""
     var gender = ""
     var age = ""
+    var language = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,9 +85,27 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
             }
 
         }
+        if(!isRegister) {
+            rlLang.visibility = View.VISIBLE
+            val langadapter = ArrayAdapter.createFromResource(activity,
+                    R.array.language, R.layout.simple_spinner_item)
+            langadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            lang_spinner.setAdapter(langadapter)
+            lang_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    language = lang_spinner.getSelectedItem().toString()
+
+                }
+
+            }
+        }
 
         if(!isRegister) {
             btnRegister.setText("Add Referral")
+            password.visibility = View.GONE
         }
 
         btnRegister.setOnClickListener(this)
@@ -114,7 +123,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
             mobile_errror.visibility = View.VISIBLE
             return false
         }
-        if(BaseHelper.isEmpty(password.text.toString())) {
+        if(isRegister && BaseHelper.isEmpty(password.text.toString())) {
             mobile_errror.visibility = View.GONE
             password_errror.visibility = View.VISIBLE
             return false
@@ -130,9 +139,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
         when (v?.id) {
             R.id.btnRegister -> {
                 if(validate()) {
-                    if(isRegister) {
-                        postRegisterViewModel.loadData(params())
-                    }
+                    postRegisterViewModel.loadData(params(),isRegister)
                 }
             }
             R.id.upload_pic -> {
@@ -171,7 +178,11 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
         jsonObject.put(Keys.GENDER, gender)
         jsonObject.put(Keys.AGE, age)
         jsonObject.put(Keys.MOBILE, mobile_no.text.toString())
-        jsonObject.put(Keys.PASSWORD, password.text.toString())
+        jsonObject.put(Keys.ALT_PHONE_NO, language)
+
+        if(isRegister) {
+            jsonObject.put(Keys.PASSWORD, password.text.toString())
+        }
         jsonObject.put(Keys.FILE_ID, file_id)
         jsonObject.put(Keys.FILE_NAME, file_name)
 
@@ -208,7 +219,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
                         })
                     } else {
                         showNotifyDialog(
-                                "", postRegisterOtpViewModel.obj?.message,
+                                "", postRegisterViewModel.obj?.message,
                                 getString(R.string.ok),"",object : NotifyListener {
                             override fun onButtonClicked(which: Int) {
                                 home().proceedDoOnBackPressed()

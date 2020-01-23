@@ -68,6 +68,7 @@ class PostDashBoardViewModel(application: Application) : BaseViewModel(applicati
 
         genericHttpAsyncTask.method = BaseConstants.POST
         genericHttpAsyncTask.setUrl(APIs.postProfileDashboard)
+        Helper.applyHeader(apl,genericHttpAsyncTask)
         genericHttpAsyncTask.context = apl.applicationContext
         genericHttpAsyncTask.setPostParams(Keys.USER_ID,UserInfoManager.getInstance(apl).getAccountId())
         genericHttpAsyncTask.setPostParams(Keys.ACCESS_TOKEN,UserInfoManager.getInstance(apl).authToken)

@@ -2,6 +2,5 @@ package com.amazon.referral.model.dashboard
 
 data class Dashboard(
     val referral_count: String = "",
-    val status: String = "",
-    val video: List<Video> = listOf()
+    val status: String = ""
 )

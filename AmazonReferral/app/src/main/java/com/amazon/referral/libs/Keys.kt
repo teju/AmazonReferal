@@ -41,6 +41,12 @@ class Keys : BaseKeys() {
         val PROFILE = "profile"
         val USER_ID = "user_id"
         val ACCESS_TOKEN = "access_token"
+        val PASSWORDRESETREQUESTFORM = "PasswordResetRequestForm"
+        val RESETPASSWORDFORM = "ResetPasswordForm"
+        val PASSWORD_RESET_TOKEN = "password_reset_token"
+        val OTP_PASSWORD = "otp_password"
+        val ALT_PHONE_NO = "alt_phone_no"
+        val LANGUAGE = "language"
 
     }
 }

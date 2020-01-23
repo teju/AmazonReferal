@@ -121,7 +121,11 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             val errorMessageModel = ErrorMessageModel()
             errorMessageModel.isShouldDisplayDialog = true
             errorMessageModel.title = ""
-            errorMessageModel.message = response!!.content.getString(Keys.ERRORS)
+            if(response!!.content.has(Keys.ERRORS)) {
+                errorMessageModel.message = response!!.content.getString(Keys.ERRORS)
+            } else {
+                errorMessageModel.message = response!!.content.getString(Keys.MESSAGE)
+            }
             return errorMessageModel
         } catch (e: Exception) {
             return createErrorMessageObject(
