@@ -1,5 +1,6 @@
 package com.amazon.referral.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,12 +15,13 @@ import com.squareup.picasso.Picasso
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.amazon.referral.libs.BaseHelper
 import com.amazon.referral.libs.Keys
 import com.amazon.referral.libs.UserInfoManager
 import com.amazon.referral.webservice.PostLoginViewModel
 import com.facebook.*
 import com.iapps.gon.etc.callback.NotifyListener
-import com.iapps.libs.helpers.BaseHelper
+import com.iapps.gon.etc.callback.PermissionListener
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.json.JSONObject
 
@@ -46,7 +48,7 @@ class LoginFragment : BaseFragment() , View.OnClickListener {
     }
     private fun initUI() {
         setLoginAPIObserver()
-
+        permissions()
         btnLogin.setOnClickListener(this)
         sign_up.setOnClickListener(this)
         forget_password.setOnClickListener(this)
@@ -116,5 +118,30 @@ class LoginFragment : BaseFragment() , View.OnClickListener {
         }
     }
 
+    fun permissions() {
+        val permissionListener: PermissionListener = object : PermissionListener {
+            override fun onUserNotGrantedThePermission() {
+            }
+
+            override fun onCheckPermission(permission: String, isGranted: Boolean) {
+                if (isGranted) {
+                    onPermissionAlreadyGranted()
+                } else {
+                    onUserNotGrantedThePermission()
+                }
+            }
+
+            @SuppressLint("MissingPermission")
+            override fun onPermissionAlreadyGranted() {
+
+            }
+        }
+        val permissions = ArrayList<String>()
+        permissions.add(android.Manifest.permission.CAMERA)
+        permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        permissions.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        checkPermissions(permissions, permissionListener)
+
+    }
 
 }

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.iapps.common_library.R;
-import com.iapps.libs.helpers.BaseHelper;
+;
 
 /**
  * Compound view to be used as a loading screen To show retry button {@link LoadingListener} must be

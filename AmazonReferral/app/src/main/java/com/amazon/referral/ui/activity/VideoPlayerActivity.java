@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
 import com.amazon.referral.R;
+import com.amazon.referral.libs.VideoControllerView;
 
 public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, VideoControllerView.MediaPlayerControl {
 
@@ -34,8 +35,16 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         
         try {
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setDataSource(this, Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"));
+            player.setDataSource(this, Uri.parse("http://amazonreferrals.com/backend/web/uploads/video/5/SampleVideo_1280x720_1mb.mp4"));
             player.setOnPreparedListener(this);
+            player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    System.out.println("setOnErrorListener what "+what+" extra "+extra);
+                    mp.start();
+                    return false;
+                }
+            });
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {

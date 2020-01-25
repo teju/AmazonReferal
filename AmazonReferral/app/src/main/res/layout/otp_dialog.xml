@@ -34,7 +34,7 @@
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/opensansregular"
                 android:id="@+id/vw_text"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:hint="Enter Otp"
+                android:hint="Enter OTP"
                 android:imeOptions="actionDone"
                 android:fontFamily="@font/opensansregular"
                 android:inputType="number"
@@ -83,7 +83,7 @@
                     android:id="@+id/btn_positive"
                     android:textSize="16dp"
                     android:fontFamily="@font/opensansregular"
-                    android:textColor="@color/themeBlue"
+                    android:textColor="@color/Orange"
                     android:background="@drawable/themewhite_rounded_rectangle"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content">

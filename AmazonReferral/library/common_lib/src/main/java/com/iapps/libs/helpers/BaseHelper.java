@@ -47,7 +47,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.iapps.common_library.R;
 import com.iapps.libs.objects.BottomSheetMediaSelectionListener;
 import com.iapps.libs.objects.Response;
-import com.iapps.libs.views.LoadingCompound;
+import com.amazon.referral.libs.LoadingCompound;
 import com.iapps.logs.com.pascalabs.util.log.activity.ActivityPascaLog;
 import com.iapps.logs.com.pascalabs.util.log.helper.Helper;
 

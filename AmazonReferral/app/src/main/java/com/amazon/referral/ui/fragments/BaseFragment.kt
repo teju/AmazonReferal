@@ -17,17 +17,13 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.amazon.referral.BuildConfig
 import com.amazon.referral.R
-import com.amazon.referral.libs.Constants
-import com.amazon.referral.libs.Helper
-import com.amazon.referral.libs.UserInfoManager
+import com.amazon.referral.libs.*
 import com.amazon.referral.ui.activity.ActivityMain
 import com.google.android.gms.fitness.data.DataSource
 import com.google.android.gms.fitness.data.DataType
 import com.iapps.gon.etc.callback.NotifyListener
 import com.iapps.gon.etc.callback.PermissionListener
-import com.iapps.libs.generics.GenericFragment
-import com.iapps.libs.helpers.BaseUIHelper
-import com.iapps.libs.views.LoadingCompound
+
 import com.memu.ui.dialog.NotifyDialogFragment
 import com.memu.ui.dialog.OtpDialogFragment
 
@@ -382,10 +378,6 @@ open class BaseFragment : GenericFragment() {
         f.show(activity!!.supportFragmentManager, NotifyDialogFragment.TAG)
     }
 
-    fun showLoadingLogicError(ld: LoadingCompound, errorLogicCode : String){
-        ld.showError(getString(com.iapps.common_library.R.string.iapps__network_error),
-            String.format("%s (%s)", getString(com.iapps.common_library.R.string.iapps__unknown_response), errorLogicCode))
-    }
 
 
     fun setBoldSpannable(myText: String, start: Int, end: Int): SpannableString {

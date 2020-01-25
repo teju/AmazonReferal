@@ -2,6 +2,7 @@ package com.amazon.referral.ui.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +14,26 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.amazon.referral.libs.Keys
+import com.amazon.referral.libs.UserInfoManager
+import com.amazon.referral.webservice.PostLanguagesViewModel
 import com.amazon.referral.webservice.PostRegisterOtpViewModel
 import com.amazon.referral.webservice.PostRegisterViewModel
 import com.amazon.referral.webservice.PostUploadProfilePicViewModel
 import com.iapps.gon.etc.callback.NotifyListener
-import com.iapps.libs.helpers.BaseHelper
 import kotlinx.android.synthetic.main.register_fragment.*
-import kotlinx.android.synthetic.main.register_fragment.mobile_no
-import kotlinx.android.synthetic.main.register_fragment.password
+
 import org.json.JSONObject
-
-
+import androidx.core.app.ActivityCompat.startActivityForResult
+import android.content.Context
+import android.net.Uri
+import android.provider.MediaStore
+import com.amazon.referral.libs.BaseHelper
+import java.io.ByteArrayOutputStream
 
 
 class RegisterFragment : BaseFragment() , View.OnClickListener {
 
+    lateinit var postLanguagesViewModel: PostLanguagesViewModel
 
     private val PICK_PHOTO_DOC: Int = 1001
     lateinit var postRegisterViewModel: PostRegisterViewModel
@@ -57,6 +63,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
         setRegisterAPIObserver()
         setUploadPRofilePicAPIObserver()
         setRegisterOtpAPIObserver()
+        setGetLanguagesAPIObserver()
         val adapter = ArrayAdapter.createFromResource(activity,
                 R.array.gender, R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
@@ -86,21 +93,8 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
 
         }
         if(!isRegister) {
-            rlLang.visibility = View.VISIBLE
-            val langadapter = ArrayAdapter.createFromResource(activity,
-                    R.array.language, R.layout.simple_spinner_item)
-            langadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-            lang_spinner.setAdapter(langadapter)
-            lang_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+            //postLanguagesViewModel.loadData()
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    language = lang_spinner.getSelectedItem().toString()
-
-                }
-
-            }
         }
 
         if(!isRegister) {
@@ -128,6 +122,15 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
             password_errror.visibility = View.VISIBLE
             return false
         }
+       /* if(BaseHelper.isEmpty(file_name) || BaseHelper.isEmpty(file_id)) {
+            showNotifyDialog(
+                    "", "Please upload your photo",
+                    getString(R.string.ok),"",object : NotifyListener {
+                override fun onButtonClicked(which: Int) { }
+            })
+            return false
+        }*/
+
         password_errror.visibility = View.GONE
         name_errror.visibility = View.GONE
         mobile_errror.visibility = View.GONE
@@ -148,31 +151,42 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
         }
     }
     fun pickImage() {
-        val intent = Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_PHOTO_DOC);
+//        val intent = Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");
+//        startActivityForResult(intent, PICK_PHOTO_DOC);
+        val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, PICK_PHOTO_DOC)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             try {
-                val imageuri = data?.getData();// Get intent
+                val photo = data?.getExtras()?.get("data") as Bitmap;
+
+                val imageuri = getImageUri(activity!!,photo);// Get intent
                 // Get real path and show over text view
                 val real_Path = BaseHelper.getRealPathFromUri(activity, imageuri);
                 postUploadDocViewModel.loadData(real_Path)
+                upload_pic.setImageBitmap(photo)
             } catch (e: Exception) {
             }
 
         }
     }
-
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null)
+        return Uri.parse(path)
+    }
     fun params() : JSONObject {
         val jsonObject = JSONObject()
         if(isRegister) {
             jsonObject.put(Keys.USER_TYPE, "associate")
         } else {
             jsonObject.put(Keys.USER_TYPE, "referral")
+            jsonObject.put(Keys.ASSOCIATE_ID,  UserInfoManager.getInstance(activity!!).getAccountId())
         }
         jsonObject.put(Keys.FIRST_NAME, name.text.toString())
         jsonObject.put(Keys.GENDER, gender)
@@ -204,8 +218,7 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
                             s.title, s.message!!,
                             getString(R.string.ok),"",object : NotifyListener {
                         override fun onButtonClicked(which: Int) { }
-                    }
-                    )
+                    })
                 })
                 isNetworkAvailable.observe(thisFragReference, obsNoInternet)
                 getTrigger().observe(thisFragReference, Observer { state ->
@@ -218,13 +231,9 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
                             }
                         })
                     } else {
-                        showNotifyDialog(
-                                "", postRegisterViewModel.obj?.message,
-                                getString(R.string.ok),"",object : NotifyListener {
-                            override fun onButtonClicked(which: Int) {
-                                home().proceedDoOnBackPressed()
-                            }}
-                        )
+                        home().setFragment(VideoFragment().apply {
+                            referral_id = postRegisterViewModel.obj?.user_id!!
+                        })
                     }
                 })
             }
@@ -251,15 +260,16 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
                 })
                 isNetworkAvailable.observe(thisFragReference, obsNoInternet)
                 getTrigger().observe(thisFragReference, Observer { state ->
-                    showNotifyDialog(
-                            "", postRegisterOtpViewModel.obj?.message,
-                            getString(R.string.ok),"",object : NotifyListener {
-                        override fun onButtonClicked(which: Int) {
-                            home().setFragment(LoginFragment())
+                    if(isRegister) {
+                        showNotifyDialog(
+                                "", postRegisterOtpViewModel.obj?.message,
+                                getString(R.string.ok), "", object : NotifyListener {
+                            override fun onButtonClicked(which: Int) {
+                                home().setFragment(LoginFragment())
 
-                        }
+                            }
+                        })
                     }
-                    )
                 })
             }
         }
@@ -292,4 +302,48 @@ class RegisterFragment : BaseFragment() , View.OnClickListener {
         }
     }
 
+    fun setGetLanguagesAPIObserver() {
+        postLanguagesViewModel = ViewModelProviders.of(this).get(PostLanguagesViewModel::class.java).apply {
+            this@RegisterFragment.let { thisFragReference ->
+                isLoading.observe(thisFragReference, Observer { aBoolean ->
+                    if(aBoolean!!) {
+                        ld.showLoadingV2()
+                    } else {
+                        ld.hide()
+                    }
+                })
+                errorMessage.observe(thisFragReference, Observer { s ->
+                    showNotifyDialog(
+                            s.title, s.message!!,
+                            getString(R.string.ok),"",object : NotifyListener {
+                        override fun onButtonClicked(which: Int) { }
+                    }
+                    )
+                })
+                isNetworkAvailable.observe(thisFragReference, obsNoInternet)
+                getTrigger().observe(thisFragReference, Observer { state ->
+                    setLangSpinner()
+                })
+            }
+        }
+    }
+
+    fun setLangSpinner() {
+        rlLang.visibility = View.VISIBLE
+        val langadapter = ArrayAdapter<String>(activity, R.layout.simple_spinner_item,  postLanguagesViewModel.obj?.languages);
+        langadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        lang_spinner.setAdapter(langadapter)
+        // postGetVideosViewModel.loadData(postLanguagesViewModel.obj?.languages?.get(0)!!)
+
+        lang_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                language = lang_spinner.getSelectedItem().toString()
+
+            }
+
+        }
+    }
 }

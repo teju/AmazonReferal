@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amazon.referral.R
+import com.amazon.referral.libs.BaseHelper
 import com.iapps.gon.etc.callback.NotifyListener
-import com.iapps.libs.helpers.BaseHelper
 import kotlinx.android.synthetic.main.generic_dialog.*
 
 class NotifyDialogFragment : BaseDialogFragment() {

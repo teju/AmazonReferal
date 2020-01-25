@@ -6,36 +6,14 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:background="@color/White"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/White"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="200dp"
-                android:src="@drawable/amazon_logo"
-                android:scaleType="fitXY"
-                android:layout_height="100dp">
-            </ImageView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Referral"
-                android:textSize="25dp"
-                android:textColor="@color/Black"
-                android:gravity="center_vertical"
-                android:fontFamily="@font/opensanssemibold"
-                android:layout_height="80dp">
-            </TextView>
-        </LinearLayout>
+        <include layout="@layout/header"></include>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="250dp"
             android:layout_marginBottom="20dp"
             android:layout_height="wrap_content">
             <ImageView
@@ -204,8 +182,7 @@
                         android:background="@color/transparent"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:entries="@array/language" />
+                        android:layout_marginTop="10dp" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:src="@drawable/menu_down"
@@ -233,7 +210,7 @@
             </LinearLayout>
 
         </LinearLayout>
-        <com.iapps.libs.views.LoadingCompound
+        <com.amazon.referral.libs.LoadingCompound
             android:id="@+id/ld"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

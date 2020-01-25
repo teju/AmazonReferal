@@ -4,31 +4,11 @@
     android:background="@color/White"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/header"></include>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="200dp"
-            android:src="@drawable/amazon_logo"
-            android:scaleType="fitXY"
-            android:layout_height="100dp">
-        </ImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Referral"
-            android:textSize="25dp"
-            android:textColor="@color/Black"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/opensanssemibold"
-            android:layout_height="80dp">
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_gravity="center_vertical"
+        android:layout_marginTop="250dp"
         android:layout_marginLeft="30dp"
         android:orientation="vertical"
         android:layout_marginRight="30dp"
@@ -72,7 +52,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="Forget Password"
+            android:text="Forgot Password"
             android:id="@+id/forget_password"
             android:fontFamily="@font/opensansregular"
             android:layout_marginTop="10dp"
@@ -103,7 +83,7 @@
         android:id="@+id/sign_up"
         android:layout_height="wrap_content">
     </TextView>
-    <com.iapps.libs.views.LoadingCompound
+    <com.amazon.referral.libs.LoadingCompound
         android:id="@+id/ld"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

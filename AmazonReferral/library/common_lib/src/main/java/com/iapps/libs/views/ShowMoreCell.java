@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.iapps.common_library.R;
-import com.iapps.libs.helpers.BaseHelper;
+;
 
 public class ShowMoreCell extends LinearLayout {
 

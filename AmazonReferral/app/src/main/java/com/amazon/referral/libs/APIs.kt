@@ -1,6 +1,5 @@
 package com.amazon.referral.libs
 
-import com.iapps.libs.helpers.BaseKeys
 
 class APIs : BaseKeys() {
     companion object {
@@ -36,6 +35,9 @@ class APIs : BaseKeys() {
 
         val postGetVideos: String
             get() = BASE_URL!!  +  "profile/get-videos"
+
+        val postReferralUpdate: String
+            get() = BASE_URL!!  +  "profile/referral-update"
 
 
     }

@@ -8,22 +8,22 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.franmontiel.localechanger.LocaleChanger
-import com.iapps.libs.helpers.BaseHelper
-import com.iapps.libs.helpers.BaseUIHelper
 
-import io.paperdb.Paper
 import java.util.ArrayList
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.view.View
 import com.amazon.referral.R
+import com.amazon.referral.libs.BaseHelper
+import com.amazon.referral.libs.BaseUIHelper
 import com.amazon.referral.libs.Helper
 import com.amazon.referral.libs.UserInfoManager
 import com.amazon.referral.ui.fragments.BaseFragment
 import com.amazon.referral.ui.fragments.LoginFragment
 import com.amazon.referral.ui.fragments.MainFragment
 import com.amazon.referral.ui.fragments.VideoFragment
+import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -51,7 +51,6 @@ class ActivityMain : AppCompatActivity(){
 
             }, 2 * 1000
         ) // wait for 5 s
-        BaseHelper.triggerNotifLog(this);
 
         mIntentFilter = IntentFilter("OPEN_NEW_ACTIVITY")
         BaseHelper.getHAshKey(this)
@@ -118,9 +117,8 @@ class ActivityMain : AppCompatActivity(){
     }
 
     fun triggerMainProcess(){
-
         if(!BaseHelper.isEmpty(UserInfoManager.getInstance(this).authToken))
-            setFragment(VideoFragment())
+            setFragment(MainFragment())
         else
             setFragment(LoginFragment())
     }

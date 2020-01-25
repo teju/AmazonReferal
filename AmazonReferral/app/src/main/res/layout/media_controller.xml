@@ -28,6 +28,7 @@
         android:orientation="horizontal">
 
         <ImageButton android:id="@+id/prev"
+            android:visibility="gone"
             style="@android:style/MediaButton.Previous"
             android:contentDescription="@string/description" />
 
@@ -40,10 +41,12 @@
             android:contentDescription="@string/description" />
 
         <ImageButton android:id="@+id/ffwd"
+            android:visibility="gone"
             style="@android:style/MediaButton.Ffwd"
             android:contentDescription="@string/description" />
 
         <ImageButton android:id="@+id/next"
+            android:visibility="gone"
             style="@android:style/MediaButton.Next"
             android:contentDescription="@string/description" />
 

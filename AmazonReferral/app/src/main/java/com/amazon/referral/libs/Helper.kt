@@ -10,8 +10,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.Nullable
 
-import com.iapps.libs.helpers.HTTPAsyncTask
-import com.iapps.libs.objects.Response
+
 import java.io.*
 import android.util.Patterns
 import android.text.TextUtils
@@ -19,6 +18,7 @@ import android.text.TextUtils
 import java.util.regex.Pattern
 import android.util.TypedValue
 import com.amazon.referral.R
+import com.amazon.referral.objects.Response
 
 
 open class Helper  {

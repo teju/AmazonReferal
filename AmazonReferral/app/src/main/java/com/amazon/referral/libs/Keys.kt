@@ -1,6 +1,5 @@
 package com.amazon.referral.libs
 
-import com.iapps.libs.helpers.BaseKeys
 
 class Keys : BaseKeys() {
     companion object {
@@ -46,7 +45,9 @@ class Keys : BaseKeys() {
         val PASSWORD_RESET_TOKEN = "password_reset_token"
         val OTP_PASSWORD = "otp_password"
         val ALT_PHONE_NO = "alt_phone_no"
+        val REFERRAL_ID = "referral_id"
         val LANGUAGE = "language"
+        val VIDEO_ID = "video_id"
 
     }
 }

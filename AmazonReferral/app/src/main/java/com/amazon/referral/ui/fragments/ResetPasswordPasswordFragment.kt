@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.amazon.referral.R
+import com.amazon.referral.libs.BaseHelper
 import com.amazon.referral.libs.Keys
 import com.amazon.referral.webservice.PostDashBoardViewModel
 import com.amazon.referral.webservice.PostForgetPasswordViewModel
@@ -14,7 +15,7 @@ import com.amazon.referral.webservice.PostResetPasswordViewModel
 
 import com.facebook.*
 import com.iapps.gon.etc.callback.NotifyListener
-import com.iapps.libs.helpers.BaseHelper
+
 import kotlinx.android.synthetic.main.reset_forget_password.*
 import org.json.JSONObject
 

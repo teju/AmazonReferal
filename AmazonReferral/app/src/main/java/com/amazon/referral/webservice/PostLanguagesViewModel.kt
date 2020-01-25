@@ -6,10 +6,10 @@ import com.amazon.referral.model.dashboard.Dashboard
 import com.amazon.referral.model.languages.Languages
 import com.amazon.referral.model.login.Login
 import com.amazon.referral.model.uploadProfilePic.UploadProfilePic
+import com.amazon.referral.objects.Response
 import com.google.gson.GsonBuilder
 
-import com.iapps.libs.helpers.BaseConstants
-import com.iapps.libs.objects.Response
+
 import org.json.JSONObject
 
 

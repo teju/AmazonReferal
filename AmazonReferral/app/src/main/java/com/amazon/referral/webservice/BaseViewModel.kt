@@ -3,12 +3,14 @@ package com.amazon.referral.webservice
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import com.amazon.referral.R
+import com.amazon.referral.libs.BaseConstants
+import com.amazon.referral.libs.BaseKeys
 import com.amazon.referral.libs.Keys
 import com.amazon.referral.libs.SingleLiveEvent
+import com.amazon.referral.objects.Response
 
-import com.iapps.libs.helpers.BaseConstants
-import com.iapps.libs.helpers.BaseKeys
-import com.iapps.libs.objects.Response
+
 import org.json.JSONObject
 import java.net.HttpURLConnection
 
@@ -27,8 +29,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun checkResponse(
-        response: Response?,
-        context: Context
+            response: Response?,
+            context: Context
     ): JSONObject? {
 
         val errorMessageModel = ErrorMessageModel()
@@ -59,10 +61,10 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             if (response.statusCode == BaseConstants.STATUS_SUCCESS) {
                 return json
             } else if (response.statusCode == BaseConstants.STATUS_TIMEOUT) {
-                errorMessageModel.message = context.getString(com.iapps.common_library.R.string.iapps__conn_timeout)
+                errorMessageModel.message = context.getString(R.string.iapps__conn_timeout)
                 errorMessage.postValue(errorMessageModel)
             } else if (response.statusCode == BaseConstants.STATUS_NO_CONNECTION) {
-                errorMessageModel.message = context.getString(com.iapps.common_library.R.string.iapps__conn_fail)
+                errorMessageModel.message = context.getString(R.string.iapps__conn_fail)
                 errorMessage.postValue(errorMessageModel)
             } else {
 
@@ -95,16 +97,16 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     fun showUnknowResponseErrorMessage() {
         errorMessage.postValue(createErrorMessageObject(
             false,
-            getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__network_error),
-            getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__unknown_response)
+            getApplication<Application>().getString(R.string.iapps__network_error),
+            getApplication<Application>().getString(R.string.iapps__unknown_response)
         ))
     }
 
     fun showUnknowResponseErrorMessage(errorStatusCode: String) {
         errorMessage.postValue(createErrorMessageObject(
             false,
-            getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__network_error),
-            String.format("%s (%s)", getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__unknown_response), errorStatusCode)
+            getApplication<Application>().getString(R.string.iapps__network_error),
+            String.format("%s (%s)", getApplication<Application>().getString(R.string.iapps__unknown_response), errorStatusCode)
         ))
     }
 
@@ -130,8 +132,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         } catch (e: Exception) {
             return createErrorMessageObject(
                 false,
-                getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__network_error),
-                getApplication<Application>().getString(com.iapps.common_library.R.string.iapps__unknown_response)
+                getApplication<Application>().getString(R.string.iapps__network_error),
+                getApplication<Application>().getString(R.string.iapps__unknown_response)
             )
         }
     }

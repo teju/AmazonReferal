@@ -19,5 +19,30 @@
         <item>Marathi</item>
 
     </string-array>
+    <string name="iapps__network_error">Internal Error</string>
+    <string name="iapps__required_field">Please provide:</string>
+
+    <string name="iapps__no_internet">No Internet connection</string>
+    <string name="iapps__unknown_response">Unknown response from server. Please try again later</string>
+    <string name="iapps__conn_timeout">We are experiencing high traffic. Sorry for the inconvenience, we should be back in few minutes</string>
+    <string name="iapps__conn_fail">Failed to connect to server</string>
+    <string name="iapps__yes">Yes</string>
+    <string name="iapps__no">No</string>
     <string name="description">Media Controls</string>
+    <string name="iapps__loading">Loading&#8230;</string>
+    <string name="iapps__retry">Retry</string>
+    <string name="iapps__done">Done</string>
+    <string name="iapps__cancel">Cancel</string>
+    <string name="iapps__ok">OK</string>
+    <string name="download_Pdf">Download pdf</string>
+    <string name="download_Doc">Download Doc</string>
+    <string name="download_zip">Download Zip</string>
+    <string name="download_video">Download Video</string>
+    <string name="download_mp3">Download MP3</string>
+    <string name="openFolder">Open Downloaded Folder</string>
+    <string name="downloadStarted">Download Started…</string>
+    <string name="downloadCompleted">Download Completed…</string>
+    <string name="downloadFailed">Download Failed…</string>
+    <string name="downloadAgain">Download Again</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -1,15 +1,11 @@
 package com.amazon.referral.webservice
 
 import android.app.Application
-import com.amazon.referral.libs.APIs
-import com.amazon.referral.libs.Helper
-import com.amazon.referral.libs.Keys
-import com.amazon.referral.libs.SingleLiveEvent
+import com.amazon.referral.libs.*
 import com.amazon.referral.model.uploadProfilePic.UploadProfilePic
+import com.amazon.referral.objects.Response
 import com.google.gson.GsonBuilder
 
-import com.iapps.libs.helpers.BaseConstants
-import com.iapps.libs.objects.Response
 
 
 class PostUploadProfilePicViewModel(application: Application) : BaseViewModel(application) {
