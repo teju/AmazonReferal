@@ -46,7 +46,7 @@ class ActivityMain : AppCompatActivity(){
             Runnable // Using handler with postDelayed called runnable run method
 
             {
-                logo_icon.visibility = View.GONE
+                llTopHeader.visibility = View.GONE
                 triggerMainProcess()
 
             }, 2 * 1000

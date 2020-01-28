@@ -15,15 +15,78 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </FrameLayout>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/amazon_logo"
-            android:id="@+id/logo_icon"
+        <LinearLayout android:layout_width="match_parent"
+            android:orientation="vertical"
             android:visibility="visible"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content">
+            android:id="@+id/llTopHeader"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="200dp"
+                    android:src="@drawable/amazon_logo"
+                    android:scaleType="fitXY"
+                    android:layout_height="80dp">
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Referral"
+                    android:textSize="25dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/Black"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/opensanssemibold"
+                    android:layout_height="60dp">
+                </TextView>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:text="in association with"
+                android:textSize="25dp"
+                android:layout_marginTop="-10dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/Black"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/opensanssemibold"
+                android:layout_height="wrap_content">
+            </TextView>
 
-        </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/logo2"
+                    android:scaleType="fitXY"
+                    android:layout_height="50dp">
+                </ImageView>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/logo3"
+                    android:textColor="@color/Black"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/opensanssemibold"
+                    android:layout_height="50dp">
+                </ImageView>
+            </LinearLayout>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 

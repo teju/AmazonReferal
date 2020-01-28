@@ -23,7 +23,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/themewhite_rounded_rectangle"
                 android:layout_height="wrap_content">
-                <Spinner
+                <com.amazon.referral.libs.MySpinner
                     android:id="@+id/lang_spinner"
                     android:layout_width="match_parent"
                     android:background="@color/transparent"

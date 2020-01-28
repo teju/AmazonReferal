@@ -1,6 +1,7 @@
 package com.amazon.referral.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.media.AudioManager
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -14,9 +15,6 @@ import android.net.Uri
 import android.media.MediaPlayer
 import android.os.Environment
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.core.view.doOnNextLayout
 import com.amazon.referral.libs.DownloadTask
 import com.amazon.referral.libs.VideoControllerView
@@ -30,7 +28,12 @@ import java.io.File
 import java.io.FileInputStream
 import java.net.URI
 import java.net.URISyntaxException
-
+import android.opengl.ETC1.getWidth
+import com.google.android.libraries.places.internal.i
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import android.opengl.ETC1.getWidth
+import android.widget.*
 
 class VideoFragment : BaseFragment() , View.OnClickListener,
         SurfaceHolder.Callback, MediaPlayer.OnPreparedListener,
@@ -205,8 +208,9 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
        // postGetVideosViewModel.loadData(postLanguagesViewModel.obj?.languages?.get(0)!!)
         lang_spinner.setSelection(0,false)
 
-        lang_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        lang_spinner.setOnItemSelectedEvenIfUnchangedListener( object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
+
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -214,11 +218,12 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
                 postGetVideosViewModel.loadData(language)
             }
 
-        }
+        })
     }
     fun playVideo(){
         video_container.visibility = View.VISIBLE
         ll1.visibility = View.GONE
+
         try {
             player?.stop()
             player?.reset()
@@ -230,6 +235,7 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
             player?.setOnCompletionListener {
                 video_container.visibility = View.GONE
                 ll1.visibility = View.VISIBLE
+
                 postReferralUpdateViewModel.loadData(referral_id,
                         postGetVideosViewModel.obj?.video?.get(0)?.id.toString())
             }
@@ -271,6 +277,25 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         player?.setDisplay(holder)
+        val videoWidth = player?.videoWidth
+        val videoHeight = player?.videoHeight
+
+        //Get the width of the screen
+        val screenWidth = activity?.getWindowManager()?.getDefaultDisplay()?.getWidth()
+
+        //Get the SurfaceView layout parameters
+        val lp = videoSurface.getLayoutParams() as FrameLayout.LayoutParams
+        lp.gravity  = Gravity.CENTER_VERTICAL
+        //Set the width of the SurfaceView to the width of the screen
+        lp.width = screenWidth!!
+
+        //Set the height of the SurfaceView to match the aspect ratio of the video
+        //be sure to cast these as floats otherwise the calculation will likely be 0
+        lp.height = (videoHeight!!.toFloat() / videoWidth!!.toFloat() * screenWidth.toFloat()).toInt()
+
+
+        //Commit the layout parameters
+        videoSurface.setLayoutParams(lp)
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
@@ -281,10 +306,15 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
     // Implement MediaPlayer.OnPreparedListener
     override fun onPrepared(mp: MediaPlayer) {
         System.out.println("setOnCompletionListener onPrepared")
+        try {
+            controller?.setMediaPlayer(this)
+            controller?.setAnchorView(videoSurfaceContainer)
 
-        controller?.setMediaPlayer(this)
-        controller?.setAnchorView(videoSurfaceContainer)
-        player?.start()
+
+            player?.start()
+        } catch (e : Exception){
+
+        }
     }
     // End MediaPlayer.OnPreparedListener
 

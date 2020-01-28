@@ -569,7 +569,7 @@ class VideoControllerView : FrameLayout {
     }
 
     companion object {
-        private val TAG = "VideoControllerView"
+        private val TAG = "VideoControllerViewNew"
         private val sDefaultTimeout = 3000
         private val FADE_OUT = 1
         private val SHOW_PROGRESS = 2
