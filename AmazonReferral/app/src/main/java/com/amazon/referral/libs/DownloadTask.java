@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.amazon.referral.R;
 import com.amazon.referral.libs.LoadingCompound;
+import com.google.common.base.Utf8;
 import com.iapps.gon.etc.callback.NotifyListener;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by SONU on 29/10/15.
@@ -40,6 +42,9 @@ public class DownloadTask {
         this.buttonText = buttonText;
         this.downloadUrl = downloadUrl;
         this.ld = ld;
+        //this.downloadUrl = this.downloadUrl.replaceAll("\\s", "");
+
+        Log.e(TAG, "downloadUrl "+this.downloadUrl);
         URI uri = null;
         try {
             uri = new URI(downloadUrl);
@@ -49,7 +54,6 @@ public class DownloadTask {
         String path = uri.getPath();
         String idStr = path.substring(path.lastIndexOf('/') + 1);
         downloadFileName = idStr;//Create file name by picking download file name from URL
-        Log.e(TAG, downloadFileName);
 
         //Start Downloading Task
         new DownloadingTask().execute();

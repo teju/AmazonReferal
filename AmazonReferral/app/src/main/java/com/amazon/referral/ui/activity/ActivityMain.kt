@@ -118,7 +118,7 @@ class ActivityMain : AppCompatActivity(){
 
     fun triggerMainProcess(){
         if(!BaseHelper.isEmpty(UserInfoManager.getInstance(this).authToken))
-            setFragment(MainFragment())
+            setFragment(VideoFragment())
         else
             setFragment(LoginFragment())
     }

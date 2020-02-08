@@ -29,7 +29,7 @@
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:text="in association with"
+        android:text="In Association With"
         android:textSize="25dp"
         android:layout_marginTop="-10dp"
         android:textAlignment="center"

@@ -46,6 +46,7 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
     internal var controller: VideoControllerView? = null
     var referral_id = ""
     var completed = false
+    var languages:ArrayList<String> = ArrayList()
     override val bufferPercentage: Int
         get() = 0
 
@@ -202,7 +203,10 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
     }
 
     fun setLangSpinner() {
-        val langadapter = ArrayAdapter<String>(activity, R.layout.simple_spinner_item,  postLanguagesViewModel.obj?.languages);
+        languages?.add("Select Language")
+        languages?.addAll(postLanguagesViewModel.obj?.languages!!)
+        System.out.println("setLangSpinner languages "+languages.size)
+        val langadapter = ArrayAdapter<String>(activity, R.layout.simple_spinner_item, languages);
         langadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         lang_spinner.setAdapter(langadapter)
        // postGetVideosViewModel.loadData(postLanguagesViewModel.obj?.languages?.get(0)!!)
@@ -214,8 +218,10 @@ class VideoFragment : BaseFragment() , View.OnClickListener,
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val language = lang_spinner.getSelectedItem().toString()
-                postGetVideosViewModel.loadData(language)
+                if(position != 0) {
+                    val language = lang_spinner.getSelectedItem().toString()
+                    postGetVideosViewModel.loadData(language)
+                }
             }
 
         })
